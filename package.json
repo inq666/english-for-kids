@@ -1,0 +1,38 @@
+{
+  "name": "inq666-rs2020q1",
+  "version": "1.0.0",
+  "description": "javascript",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/inq666-RS2020Q1.git"
+  },
+  "keywords": [
+    "javascript",
+    "webpack",
+    "css",
+    "html"
+  ],
+  "author": "Yahor Neverouski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rolling-scopes-school/inq666-RS2020Q1/issues"
+  },
+  "homepage": "https://github.com/rolling-scopes-school/inq666-RS2020Q1#readme",
+  "dependencies": {
+    "csscomb": "^4.3.0",
+    "htmlhint": "^0.11.0",
+    "stylelint": "^13.3.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
