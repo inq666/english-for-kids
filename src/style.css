@@ -27,7 +27,6 @@ p {
 .wrapper {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 40px;
 }
 
 .nav {
@@ -43,6 +42,12 @@ p {
   padding-top: 120px;
 
   background-color: rgb(125, 240, 255);
+  transition: transform 0.5s ease;
+
+}
+
+.nav-hidden {
+  transform: translateX(-100%);
 }
 
 .nav-link {
