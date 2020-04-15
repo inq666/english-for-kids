@@ -10,9 +10,10 @@ module.exports = (env, options) => {
   const config = {
     mode: isProduction ? 'production' : 'development',
     devtool: isProduction ? 'none' : 'source-map',
-    entry: ['./src/index.js', './src/style.css'],
+    watch: !isProduction,
+    entry: ['./src/script.js', './src/style.css'],
     output: {
-      filename: 'script.js',
+      filename: 'main.js',
       path: path.join(__dirname, '/dist'),
     },
     module: {
