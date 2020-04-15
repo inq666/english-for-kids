@@ -6,31 +6,56 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>English For Kids</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="wrapper">
+
+    <!--HEADER-->
     <header class="header">
       <div class="menu-icon">
         <span class="menu-icon-line"></span>
       </div>
       <nav class="nav nav-hidden">
-        <a class="nav-link"  href="#">1</a>
-        <a class="nav-link"  href="#">2</a>
-        <a class="nav-link"  href="#">3</a>
-        <a class="nav-link"  href="#">4</a>
-        <a class="nav-link"  href="#">5</a>
-        <a class="nav-link"  href="#">6</a>
-        <a class="nav-link"  href="#">7</a>
-        <a class="nav-link"  href="#">8</a>
-        <a class="nav-link"  href="#">9</a>
-        <a class="nav-link"  href="#">10</a>
+        <a class="nav-link" href="#">1</a>
+        <a class="nav-link" href="#">2</a>
+        <a class="nav-link" href="#">3</a>
+        <a class="nav-link" href="#">4</a>
+        <a class="nav-link" href="#">5</a>
+        <a class="nav-link" href="#">6</a>
+        <a class="nav-link" href="#">7</a>
+        <a class="nav-link" href="#">8</a>
+        <a class="nav-link" href="#">9</a>
+        <a class="nav-link" href="#">10</a>
       </nav>
-      <div class="switcher"></div>
+      <div class="mode-switch">
+        <input id="toggle" type="checkbox">
+        <label for="toggle" class="switch">TRAIN</label>
+      </div>
     </header>
-  </div>
-  <script src="index.js"></script>
+
+    <!--CONTAINER-->
+    <div class="container">
+      <div class="main-page">
+        <div class="category-card">
+          <img alt="Actions" src="images/category/Actions.jpg" width="180" height="180">
+          <h2>Actions</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-page">
+      <div class="word-card">
+        <div class="word-control">
+          <h2>Jump1</h2>
+        </div>
+        <div class="rotate"></div>
+      </div>
+    </div>
+
+    <script src="script.js" type="module"></script>
 </body>
 
 </html>
