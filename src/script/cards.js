@@ -2,20 +2,20 @@ import cardData from './Data/cardData.js';
 
 class Cards {
   constructor() {
-    this.cardsPage = document.querySelector('.cards-page');
+    this.cardsWrapper = document.querySelector('.cards-wrapper');
     this.cardData = cardData;
   }
 
   elementGeneration() {
     const wordCard = document.querySelector('.word-card');
-    for (let j = 0; j < this.cardData.length; j += 1) {
+    for (let j = 1; j < this.cardData.length; j += 1) {
       const newElem = wordCard.cloneNode(true);
-      this.cardsPage.append(newElem);
+      this.cardsWrapper.append(newElem);
     }
   }
 }
 
-const card = new Cards();
-card.elementGeneration();
+const cards = new Cards();
+cards.elementGeneration();
 
-export default card;
+export default cards;

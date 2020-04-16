@@ -8,8 +8,8 @@ class Category {
     const categoryCard = document.querySelector('.category-card');
     for (let i = 1; i < this.categoryImages.length; i += 1) {
       const newElem = categoryCard.cloneNode(true);
-      newElem.firstElementChild.alt = this.categoryImages[i];
-      newElem.firstElementChild.src = `images/category/${this.categoryImages[i]}.jpg`;
+      newElem.href = `#${this.categoryImages[i]}`;
+      newElem.firstElementChild.style.backgroundImage = `url('images/category/${this.categoryImages[i]}.jpg')`
       newElem.lastElementChild.textContent = this.categoryImages[i];
       this.mainPage.append(newElem);
     }
