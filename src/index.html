@@ -19,16 +19,16 @@
         <span class="menu-icon-line"></span>
       </div>
       <nav class="nav nav-hidden">
-        <a class="nav-link" href="#">1</a>
-        <a class="nav-link" href="#">2</a>
-        <a class="nav-link" href="#">3</a>
-        <a class="nav-link" href="#">4</a>
-        <a class="nav-link" href="#">5</a>
-        <a class="nav-link" href="#">6</a>
-        <a class="nav-link" href="#">7</a>
-        <a class="nav-link" href="#">8</a>
-        <a class="nav-link" href="#">9</a>
-        <a class="nav-link" href="#">10</a>
+        <a class="nav-link active-link" href="#MainPage">Main Page</a>
+        <a class="nav-link" href="#Actions">Actions</a>
+        <a class="nav-link" href="#Animals (set 1)">Animals (set 1)</a>
+        <a class="nav-link" href="#Animals (set 2)">Animals (set 2)</a>
+        <a class="nav-link" href="#Clothes">Clothes</a>
+        <a class="nav-link" href="#Emotions">Emotions</a>
+        <a class="nav-link" href="#Fruits">Fruits</a>
+        <a class="nav-link" href="#Sweets">Sweets</a>
+        <a class="nav-link" href="#Vegetables">Vegetables</a>
+        <a class="nav-link" href="#Statistics">Statistics</a>
       </nav>
       <div class="mode-switch">
         <input id="toggle" type="checkbox">
@@ -39,19 +39,27 @@
     <!--CONTAINER-->
     <div class="container">
       <div class="main-page">
-        <div class="category-card">
-          <img alt="Actions" src="images/category/Actions.jpg" width="180" height="180">
+        <a class="category-card" href="#Actions">
+          <div class="category-card-image"></div>
           <h2>Actions</h2>
-        </div>
+        </a>
       </div>
     </div>
 
     <div class="cards-page">
-      <div class="word-card">
-        <div class="word-control">
-          <h2>Jump1</h2>
+      <div class="start-game">start game</div>
+      <div class="cards-wrapper">
+        <div class="word-card">
+          <div class="bottom-panel">
+            <div class="word-control-front">
+              <h2 class="card-title">22</h2>
+            </div>
+            <div class="word-control-back">
+              <h2 class="card-title">11</h2>
+            </div>
+            <div class="rotate"></div>
+          </div>
         </div>
-        <div class="rotate"></div>
       </div>
     </div>
 
