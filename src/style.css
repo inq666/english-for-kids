@@ -438,3 +438,73 @@ p {
 
   background-image: url("images/icons/star-lose.svg");
 }
+
+/*statistics*/
+.statistics {
+  text-align: center;
+}
+
+.reset-statistics,
+.repeat-difficult {
+  width: 400px;
+  height: 100px;
+  margin-top: -20px;
+  margin-right: 20px;
+
+  font-size: 27px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+
+  background: linear-gradient(45deg, rgb(245, 211, 91) 0%, rgb(255, 172, 230) 100%);
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  cursor: pointer;
+
+  transition: box-shadow 0.5s, transform 0.3s linear;
+}
+
+.reset-statistics:hover,
+.repeat-difficult-button:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+
+.reset-statistics:active,
+.repeat-difficult:active {
+  transform: scale(0.95);
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+
+  border-collapse: collapse;
+  font-size: 25px;
+}
+
+caption {
+  font-size: 70px;
+}
+
+th,
+td {
+  padding: 5px;
+
+  text-align: center;
+  text-transform: uppercase;
+
+  border-right: 2px solid rgb(0, 0, 0);
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+th {
+  background-color: rgba(255, 0, 179, 0.158);
+  cursor: pointer;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
