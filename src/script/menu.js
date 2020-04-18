@@ -7,18 +7,16 @@ class Menu {
 
   eventListener() {
     window.addEventListener('click', (event) => {
-      if (!this.navActive || event.target.classList.contains('menu-icon') || event.target.classList.contains('menu-icon-line')) {
-        return;
-      } else if (event.target.tagName !== 'NAV') {
+      const clickTarget = event.target;
+      if (clickTarget.closest('.menu-icon') && !this.navActive) {
+        document.querySelector('.menu-icon-line').classList.toggle('menu-icon-active');
+        this.nav.classList.toggle('nav-hidden');
+        this.navActive = true;
+      } else if (clickTarget.tagName !== 'NAV' && this.navActive) {
         document.querySelector('.menu-icon-line').classList.toggle('menu-icon-active');
         this.nav.classList.add('nav-hidden');
         this.navActive = false;
       }
-    });
-    this.menu.addEventListener('click', () => {
-      document.querySelector('.menu-icon-line').classList.toggle('menu-icon-active');
-      this.nav.classList.toggle('nav-hidden');
-      this.navActive = true;
     });
   }
 }
