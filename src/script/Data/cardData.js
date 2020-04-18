@@ -344,7 +344,7 @@ const cardData = [
     },
     {
       word: 'jam',
-      translation: 'jam',
+      translation: 'варенье',
       image: 'images/sweets/jam.jpg',
       audioSrc: 'audio/laugh.mp3',
     },
