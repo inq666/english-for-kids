@@ -16,14 +16,13 @@
     <img src="images/smiley/happy_smile.jpg" alt="happy smile" width="840" height="514">
     <p>congratulations</p>
   </div>
+
   <div class="lose-game">
     <img src="images/smiley/sad_smile.jpg" alt="happy smile" width="600" height="600">
     <p>Errors:</p>
   </div>
 
   <div class="wrapper">
-
-    <!--HEADER-->
     <header class="header">
       <div class="menu-icon">
         <span class="menu-icon-line"></span>
@@ -76,7 +75,28 @@
         </div>
       </div>
     </div>
-    <script src="script.js" type="module"></script>
+  </div>
+  <div class="statistics">
+    <button class="reset-statistics">reset statistics</button>
+    <button class="repeat-difficult">Repeat difficult words</button>
+    <table>
+      <caption>Statistics</caption>
+      <thead>
+        <tr>
+          <th>category</th>
+          <th>word</th>
+          <th>translate</th>
+          <th>click in training</th>
+          <th>right answers in the game</th>
+          <th>mistakes in the game</th>
+          <th>percentage of mistakes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="script.js" type="module"></script>
 </body>
 
 </html>
