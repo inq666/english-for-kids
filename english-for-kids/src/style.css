@@ -596,6 +596,10 @@ th:active {
   table {
     font-size: 0.23em;
   }
+  
+  .nav-link {
+    font-size: 27px;
+  }
 }
 
 @media (max-width: 320px) {
