@@ -254,7 +254,6 @@ class Game {
       this.currentCard.querySelector('.word-control-back').style.transform = 'rotateY(360deg)';
       this.currentCard.querySelector('.word-control-front').style.transform = 'rotateY(180deg)';
       this.currentCard.style.transform = 'rotateY(180deg)';
-      this.rotate.style.opacity = '0';
       setTimeout(() => {
         this.rotateMode = true;
       }, 600);
@@ -264,11 +263,10 @@ class Game {
   reverseRotateCard(event) {
     if (this.currentCard) {
       if (this.rotateMode) {
-        if (!event.toElement.classList.contains('word-card')) {
+        if (event.toElement !== this.currentCard) {
           this.currentCard.querySelector('.word-control-back').style.transform = 'rotateY(180deg)';
           this.currentCard.querySelector('.word-control-front').style.transform = 'rotateY(0deg)';
           this.currentCard.style.transform = 'rotateY(0deg)';
-          this.rotate.style.opacity = '1';
           this.rotateMode = false;
         }
       }
