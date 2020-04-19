@@ -1,7 +1,7 @@
-import menu from './script/menu.js';
-import category from './script/category.js';
-import cards from './script/cards.js';
-import switcher from './script/switcher.js';
+import menu from './script/menu';
+import category from './script/category';
+import cards from './script/cards';
+import switcher from './script/switcher';
 
 class Game {
   constructor() {
@@ -63,7 +63,7 @@ class Game {
     if (this.gameMode) {
       this.stopGame();
     }
-    if (switcher.switcher) {
+    if (switcher.switcherMode) {
       this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'none');
     }
     const columnPercent = 6;
@@ -88,6 +88,8 @@ class Game {
         } else {
           document.querySelector('.no-mistakes').style.display = 'none';
         }
+        if (!switcher.switcherMode) this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'block');
+        this.difficultWordsArray.sort(() => Math.random() - 0.5);
         return;
       }
       const categoryWord = this.allRow[i + 1].children[0].textContent.toLocaleLowerCase();
@@ -100,7 +102,6 @@ class Game {
       this.difficultCards.append(newDifficultCard);
       this.difficultWordsArray.push(word);
     }
-    this.difficultWordsArray.sort(() => Math.random() - 0.5);
   }
 
   startGame() {

@@ -1,4 +1,4 @@
-import game from '../script.js';
+import game from '../script';
 
 class Switcher {
   constructor() {
