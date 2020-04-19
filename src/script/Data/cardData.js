@@ -1,6 +1,7 @@
 const cardData = [
   [
     {
+
       word: 'fly', // actions
       translation: 'летать',
       image: 'images/actions/fly.jpg',
