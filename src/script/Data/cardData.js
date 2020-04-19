@@ -1,51 +1,51 @@
 const cardData = [
   [
     {
-      word: 'fly', // action
+      word: 'fly', // actions
       translation: 'летать',
-      image: 'images/action/fly.jpg',
+      image: 'images/actions/fly.jpg',
       audioSrc: 'audio/cry.mp3',
     },
     {
       word: 'hug',
       translation: 'обнимать',
-      image: 'images/action/hug.jpg',
+      image: 'images/actions/hug.jpg',
       audioSrc: 'audio/dance.mp3',
     },
     {
       word: 'jump',
       translation: 'прыгать',
-      image: 'images/action/jump.jpg',
+      image: 'images/actions/jump.jpg',
       audioSrc: 'audio/dive.mp3',
     },
     {
       word: 'laugh',
       translation: 'смеяться',
-      image: 'images/action/laugh.jpg',
+      image: 'images/actions/laugh.jpg',
       audioSrc: 'audio/draw.mp3',
     },
     {
       word: 'open',
       translation: 'открывать',
-      image: 'images/action/open.jpg',
+      image: 'images/actions/open.jpg',
       audioSrc: 'audio/fish.mp3',
     },
     {
       word: 'play',
       translation: 'играть',
-      image: 'images/action/play.jpg',
+      image: 'images/actions/play.jpg',
       audioSrc: 'audio/fly.mp3',
     },
     {
       word: 'run',
       translation: 'бегать',
-      image: 'images/action/run.jpg',
+      image: 'images/actions/run.jpg',
       audioSrc: 'audio/hug.mp3',
     },
     {
       word: 'sing',
       translation: 'петь',
-      image: 'images/action/sing.jpg',
+      image: 'images/actions/sing.jpg',
       audioSrc: 'audio/jump.mp3',
     },
   ],
@@ -201,51 +201,51 @@ const cardData = [
   ],
   [
     {
-      word: 'sad', // emotion
+      word: 'sad', // emotions
       translation: 'грустный',
-      image: 'images/emotion/sad.jpg',
+      image: 'images/emotions/sad.jpg',
       audioSrc: 'audio/sad.mp3',
     },
     {
       word: 'angry',
       translation: 'сердитый',
-      image: 'images/emotion/angry.jpg',
+      image: 'images/emotions/angry.jpg',
       audioSrc: 'audio/angry.mp3',
     },
     {
       word: 'happy',
       translation: 'счастливый',
-      image: 'images/emotion/happy.jpg',
+      image: 'images/emotions/happy.jpg',
       audioSrc: 'audio/happy.mp3',
     },
     {
       word: 'tired',
       translation: 'уставший',
-      image: 'images/emotion/tired.jpg',
+      image: 'images/emotions/tired.jpg',
       audioSrc: 'audio/tired.mp3',
     },
     {
       word: 'surprised',
       translation: 'удивлённый',
-      image: 'images/emotion/surprised.jpg',
+      image: 'images/emotions/surprised.jpg',
       audioSrc: 'audio/surprised.mp3',
     },
     {
       word: 'scared',
       translation: 'испуганный',
-      image: 'images/emotion/scared.jpg',
+      image: 'images/emotions/scared.jpg',
       audioSrc: 'audio/scared.mp3',
     },
     {
       word: 'smile',
       translation: 'улыбка',
-      image: 'images/emotion/smile.jpg',
+      image: 'images/emotions/smile.jpg',
       audioSrc: 'audio/smile.mp3',
     },
     {
       word: 'cry',
       translation: 'плач',
-      image: 'images/emotion/cry.jpg',
+      image: 'images/emotions/cry.jpg',
       audioSrc: 'audio/laugh.mp3',
     },
   ],

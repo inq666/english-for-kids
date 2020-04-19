@@ -17,12 +17,18 @@ class Game {
     this.audio = new Audio();
     this.audio.autoplay = true;
     this.sortMode = false;
+    this.difficultMode = false;
   }
 
   createDOM() {
     if (this.statisticsWord === null) {
       this.statisticsReset();
     }
+    this.buttonBack = document.querySelector('.back-statisctics');
+    this.cardsWrapper = document.querySelector('.cards-wrapper');
+    this.difficultWords = document.querySelector('.difficult-words');
+    this.difficultCards = document.querySelector('.difficult-cards');
+    this.repeatDifficult = document.querySelector('.repeat-difficult');
     this.table = document.querySelector('table');
     this.statistics = document.querySelector('.statistics');
     this.wrapper = document.querySelector('.wrapper');
@@ -36,12 +42,14 @@ class Game {
   }
 
   eventListener() {
+    this.buttonBack.addEventListener('click', (event) => this.generatorStatistics(event));
+    this.repeatDifficult.addEventListener('click', () => this.generatorDifficultWord());
     this.table.addEventListener('click', (event) => this.statisticsSort(event));
     this.resetButton.addEventListener('click', () => this.statisticsReset());
     this.wrapper.addEventListener('click', (event) => this.checkClickLink(event));
     this.container.addEventListener('click', (event) => this.rotateCard(event));
     this.container.addEventListener('mousemove', (event) => this.reverseRotateCard(event));
-    this.cardsWrapper.addEventListener('click', (event) => this.audioPlay(event));
+    this.cardsPage.addEventListener('click', (event) => this.audioPlay(event));
     this.startGameButton.addEventListener('click', () => this.startGame());
     this.cardsPage.addEventListener('click', (event) => this.playGame(event));
     this.repeatButton.addEventListener('click', () => this.newWord());
@@ -50,12 +58,53 @@ class Game {
     });
   }
 
+  generatorDifficultWord() {
+    if (this.gameMode) {
+      this.stopGame();
+    }
+    this.buttonBack.style.display = 'block';
+    this.difficultWords.querySelector('.repeat-difficult-text').style.display = 'block';
+    this.currentPage = 'Statistics';
+    this.allRow = document.querySelectorAll('tr');
+    this.statistics.remove();
+    this.cardsWrapper.remove();
+    this.container.append(this.cardsPage);
+    this.cardsPage.append(this.difficultWords);
+    this.difficultCards.innerHTML = '';
+    this.sortMode = false;
+    this.sortNum(6);
+    this.difficultWordsArray = [];
+    this.difficultMode = true;
+    for (let i = 0; i < 8; i += 1) {
+      if (this.allRow[i + 1].children[6].textContent === '0.00%') {
+        if (i === 0) {
+          document.querySelector('.no-mistakes').style.display = 'block';
+        } else {
+          document.querySelector('.no-mistakes').style.display = 'none';
+        }
+        return;
+      }
+      const categoryWord = this.allRow[i + 1].children[0].textContent.toLocaleLowerCase();
+      const word = this.allRow[i + 1].children[1].textContent;
+      const translate = this.allRow[i + 1].children[2].textContent;
+      const newDifficultCard = this.cardsWrapper.children[0].cloneNode(true);
+      newDifficultCard.style.backgroundImage = `url('images/${categoryWord}/${word}.jpg')`;
+      newDifficultCard.querySelector('.word-control-front .card-title').textContent = word;
+      newDifficultCard.querySelector('.word-control-back .card-title').textContent = translate;
+      this.difficultCards.append(newDifficultCard);
+      this.difficultWordsArray.push(word);
+    }
+    this.difficultWordsArray.sort(() => Math.random() - 0.5);
+  }
+
   startGame() {
     document.querySelector('.start-game').style.display = 'none';
     this.stars.style.visibility = 'visible';
     this.repeatButton.style.display = 'block';
-    const index = this.category.indexOf(this.currentPage);
-    this.randomArray = this.cardData[index].sort(() => Math.random() - 0.5);
+    if (!this.difficultMode) {
+      const index = this.category.indexOf(this.currentPage);
+      this.randomArray = this.cardData[index].sort(() => Math.random() - 0.5);
+    }
     this.mistakes = 0;
     this.nextElem = 0;
     this.gameMode = true;
@@ -73,7 +122,11 @@ class Game {
       this.nextElem += 1;
       this.statisticsWord[this.currentWord].correct += 1;
       this.audio.src = 'audio/correct.mp3';
-      if (this.nextElem === 8) {
+      if (!this.difficultMode && this.nextElem === 8) {
+        setTimeout(() => this.finishGame(), 600);
+        return;
+      }
+      if (this.difficultMode && this.nextElem === this.difficultWordsArray.length) {
         setTimeout(() => this.finishGame(), 600);
         return;
       }
@@ -88,11 +141,16 @@ class Game {
   }
 
   newWord() {
-    this.currentWord = this.randomArray[this.nextElem].word;
+    if (!this.difficultMode) {
+      this.currentWord = this.randomArray[this.nextElem].word;
+    } else {
+      this.currentWord = this.difficultWordsArray[this.nextElem];
+    }
     this.audio.src = `audio/${this.currentWord}.mp3`;
   }
 
   finishGame() {
+    this.difficultMode = false;
     if (this.mistakes) {
       this.audio.src = 'audio/sad_finish.mp3';
       document.querySelector('.lose-game').style.display = 'block';
@@ -110,11 +168,14 @@ class Game {
   }
 
   stopGame() {
+    this.buttonBack.style.display = 'none';
+    this.difficultWords.querySelector('.repeat-difficult-text').style.display = 'none';
     this.cardsPage.querySelector('.start-game').style.display = 'block';
     this.cardsPage.querySelectorAll('.correctly-word').forEach((item) => item.classList.remove('correctly-word'));
     this.mistakes = 0;
     this.nextElem = 0;
     this.gameMode = false;
+    this.difficultMode = false;
     this.repeatButton.style.display = 'none';
     this.stars.innerHTML = '';
   }
@@ -162,6 +223,8 @@ class Game {
     }
     this.statistics.remove();
     this.mainPage.remove();
+    this.difficultWords.remove();
+    this.cardsPage.append(this.cardsWrapper);
     this.container.append(this.cardsPage);
     const index = this.category.indexOf(this.currentPage);
     this.cardData[index].sort(() => Math.random() - 0.5);
@@ -210,8 +273,12 @@ class Game {
     }
   }
 
-  generatorStatistics() {
-    const tableContainer = document.querySelector('tbody');
+  generatorStatistics(event) {
+    if (event && event.target.closest('.back-statisctics')) {
+      this.cardsPage.remove();
+      document.body.append(this.statistics);
+    }
+    const tableContainer = this.table.querySelector('tbody');
     tableContainer.innerHTML = '';
     for (let i = 0; i < this.cardData.length; i += 1) {
       for (let z = 0; z < this.cardData[i].length; z += 1) {

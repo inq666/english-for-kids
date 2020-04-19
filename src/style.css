@@ -200,7 +200,8 @@ p {
 }
 
 .main-page,
-.cards-wrapper {
+.cards-wrapper,
+.difficult-cards {
   position: relative;
 
   display: flex;
@@ -261,7 +262,7 @@ p {
   height: 300px;
   margin: 15px;
 
-  background-image: url("images/action/sing.jpg");
+  background-image: url("images/actions/sing.jpg");
   background-position: center;
   background-size: cover;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -445,7 +446,8 @@ p {
 }
 
 .reset-statistics,
-.repeat-difficult {
+.repeat-difficult,
+.back-statisctics {
   width: 400px;
   height: 100px;
   margin-top: -20px;
@@ -466,13 +468,26 @@ p {
   transition: box-shadow 0.5s, transform 0.3s linear;
 }
 
+.back-statisctics {
+  display: none;
+  position: absolute;
+  left: 100px;
+top: -20px;
+  margin: 0;
+  width: 200px;
+  height: 80px;
+  background: linear-gradient(rgb(255, 162, 162) 0%,rgb(238, 126, 238) 40%);
+}
+
 .reset-statistics:hover,
-.repeat-difficult-button:hover {
+.repeat-difficult-button:hover,
+.back-statisctics:hover {
   box-shadow: 0 0 10px rgba(0,0,0,1);
 }
 
 .reset-statistics:active,
-.repeat-difficult:active {
+.repeat-difficult:active,
+.back-statisctics:active {
   transform: scale(0.95);
 }
 
@@ -491,7 +506,6 @@ caption {
 th,
 td {
   padding: 5px;
-
   text-align: center;
   text-transform: uppercase;
 
@@ -500,11 +514,39 @@ td {
 }
 
 th {
+  border-radius: 20px;
   background-color: rgba(255, 0, 179, 0.158);
   cursor: pointer;
+  transition: box-shadow 0.2s, background 0.3s linear;
+}
+
+th:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  background-color: rgba(255, 0, 179, 0.493);
+}
+
+th:active {
+  box-shadow: 0 0 15px rgb(0, 0, 0);
+  background-color: rgba(168, 0, 118, 0.397);
 }
 
 th:last-child,
 td:last-child {
   border-right: none;
+}
+
+.no-mistakes,
+.repeat-difficult-text {
+  text-align: center;
+  margin-top: 15%;
+  display: none;
+  font-size: 80px;
+  color: #0000006c;
+}
+
+.repeat-difficult-text {
+left: 29%;
+  position: absolute;
+  top: -40px;
+  margin-top: 0;
 }

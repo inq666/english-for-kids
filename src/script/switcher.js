@@ -16,16 +16,22 @@ class Switcher {
       if (!this.switcherMode) {
         this.switcher.textContent = 'PLAY';
         this.switcherMode = true;
+        if (game.currentPage === 'Statistics') {
+          game.difficultMode = true;
+        }
         this.switcher.style.background = backgroundTrain;
         this.nav.style.background = backgroundTrain;
+        game.difficultWords.querySelector('.back-statisctics').style.background = backgroundTrain;
         this.mainPage.querySelectorAll('.category-card').forEach((item) => item.style.background = 'linear-gradient(rgb(255, 229, 59) 0%, rgb(250, 39, 39) 40%, #ffffff 30%)');
         this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'none');
         this.startGame.style.display = 'block';
       } else {
         this.switcher.textContent = 'TRAIN';
         this.switcherMode = false;
+        game.difficultMode = false;
         this.switcher.style.background = backgroundPlay;
         this.nav.style.background = backgroundPlay;
+        game.difficultWords.querySelector('.back-statisctics').style.background = backgroundPlay;
         this.mainPage.querySelectorAll('.category-card').forEach((item) => item.style.background = 'linear-gradient(rgb(255, 162, 162) 0%,rgb(250, 132, 250) 40%, #ffffff 30%)');
         this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'block');
         game.stopGame();
