@@ -170,23 +170,34 @@ p {
   border-radius: 25px;
   cursor: pointer;
 
-  transition: background-color 0.6s ease;
+  transition: background-color 0.6s, box-shadow 0.3s ease;
+}
+
+
+.switch:hover {
+  box-shadow: 0 0 15px rgba(243, 110, 255, 0.527);
 }
 
 .switch::before {
   content: "";
   position: absolute;
-  top: 2px;
+  top: 0;
   left: 3px;
 
   display: inline-block;
-  width: 1.375em;
-  height: 1.375em;
+  width: 1.5em;
+  height: 1.5em;
 
-  background-color: white;
+  background-image: url("images/icons/circle.jpg");
+  background-position: center;
+  background-size: cover;
   border-radius: 50%;
 
-  transition: left 0.3s ease;
+  transition: left 0.3s, transform 2s ease;
+}
+
+.switch:hover::before {
+  transform: rotate(180deg)
 }
 
 #toggle:checked + label {
@@ -196,7 +207,7 @@ p {
 }
 
 #toggle:checked + label::before {
-  left: 3.55em;
+  left: 3.40em;
 }
 
 /*CATEGORY-CARDS*/
@@ -596,7 +607,11 @@ th:active {
   table {
     font-size: 0.23em;
   }
-  
+
+  .nav {
+    width: 300px;
+  }
+
   .nav-link {
     font-size: 27px;
   }
