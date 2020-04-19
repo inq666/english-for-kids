@@ -79,14 +79,13 @@ class Game {
     this.sortNum(columnPercent);
     this.difficultWordsArray = [];
     this.difficultMode = true;
-    for (let i = 0; i < this.cardData.length; i += 1) {
-      if (this.allRow[i + 1].children[columnPercent].textContent === '0.00%') {
+     for (let i = 0; i < this.cardData.length; i += 1) {
+      if (this.allRow[i + 1].children[columnPercent].textContent === '0.00%' || i >= this.cardData.length - 1) {
+        document.querySelector('.no-mistakes').style.display = 'none';
         if (i === 0) {
           switcher.switcher.style.display = 'none';
           document.querySelector('.no-mistakes').style.display = 'block';
           this.startGameButton.style.display = 'none';
-        } else {
-          document.querySelector('.no-mistakes').style.display = 'none';
         }
         if (!switcher.switcherMode) this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'block');
         this.difficultWordsArray.sort(() => Math.random() - 0.5);
