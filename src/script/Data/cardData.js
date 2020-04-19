@@ -1,7 +1,6 @@
 const cardData = [
   [
     {
-
       word: 'fly', // actions
       translation: 'летать',
       image: 'images/actions/fly.jpg',
@@ -194,10 +193,10 @@ const cardData = [
       audioSrc: 'audio/coat.mp3',
     },
     {
-      word: 'shoe',
+      word: 'shoes',
       translation: 'туфли',
-      image: 'images/clothes/shoe.jpg',
-      audioSrc: 'audio/shoe.mp3',
+      image: 'images/clothes/shoes.jpg',
+      audioSrc: 'audio/shoes.mp3',
     },
   ],
   [

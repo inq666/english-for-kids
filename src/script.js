@@ -5,48 +5,49 @@ import switcher from './script/switcher.js';
 
 class Game {
   constructor() {
-    this.statisticsWord = JSON.parse(localStorage.getItem('statistics'));
-    this.categoryImages = category.categoryImages;
-    this.mainPage = category.mainPage;
-    this.category = category.categoryImages;
-    this.cardData = cards.cardData;
-    this.cardsWrapper = cards.cardsWrapper;
-    this.startGameButton = switcher.startGame;
-    this.nav = menu.nav;
-    this.gameMode = false;
     this.audio = new Audio();
     this.audio.autoplay = true;
+    this.statisticsWord = JSON.parse(localStorage.getItem('statistics'));
+    this.gameMode = false;
     this.sortMode = false;
     this.difficultMode = false;
   }
 
   createDOM() {
-    if (this.statisticsWord === null) {
-      this.statisticsReset();
-    }
-    this.buttonBack = document.querySelector('.back-statisctics');
-    this.cardsWrapper = document.querySelector('.cards-wrapper');
+    this.mainPage = category.mainPage;
+    this.cardData = cards.cardData;
+    this.cardsWrapper = cards.cardsWrapper;
+    this.startGameButton = switcher.startGame;
+
+    this.repeatButton = document.querySelector('.repeat');
+    this.resetButton = document.querySelector('.reset-statistics');
+    this.backButton = document.querySelector('.back-statisctics');
+
+    this.statistics = document.querySelector('.statistics');
     this.difficultWords = document.querySelector('.difficult-words');
     this.difficultCards = document.querySelector('.difficult-cards');
     this.repeatDifficult = document.querySelector('.repeat-difficult');
-    this.table = document.querySelector('table');
-    this.statistics = document.querySelector('.statistics');
-    this.wrapper = document.querySelector('.wrapper');
+
+
     this.container = document.querySelector('.container');
     this.cardsPage = document.querySelector('.cards-page');
-    this.repeatButton = document.querySelector('.repeat');
+
     this.stars = document.querySelector('.stars');
-    this.resetButton = document.querySelector('.reset-statistics');
+    this.table = document.querySelector('table');
+    if (this.statisticsWord === null) {
+      this.statisticsReset();
+    }
     this.cardsPage.remove();
     this.statistics.remove();
+    this.difficultWords.remove();
   }
 
   eventListener() {
-    this.buttonBack.addEventListener('click', (event) => this.generatorStatistics(event));
+    this.backButton.addEventListener('click', (event) => this.generatorStatistics(event));
     this.repeatDifficult.addEventListener('click', () => this.generatorDifficultWord());
     this.table.addEventListener('click', (event) => this.statisticsSort(event));
     this.resetButton.addEventListener('click', () => this.statisticsReset());
-    this.wrapper.addEventListener('click', (event) => this.checkClickLink(event));
+    window.addEventListener('click', (event) => this.checkClickLink(event));
     this.container.addEventListener('click', (event) => this.rotateCard(event));
     this.container.addEventListener('mousemove', (event) => this.reverseRotateCard(event));
     this.cardsPage.addEventListener('click', (event) => this.audioPlay(event));
@@ -62,8 +63,11 @@ class Game {
     if (this.gameMode) {
       this.stopGame();
     }
-    this.buttonBack.style.display = 'block';
-    this.difficultWords.querySelector('.repeat-difficult-text').style.display = 'block';
+    if (switcher.switcher) {
+      this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'none');
+    }
+    const columnPercent = 6;
+    this.backButton.style.display = 'block';
     this.currentPage = 'Statistics';
     this.allRow = document.querySelectorAll('tr');
     this.statistics.remove();
@@ -72,13 +76,15 @@ class Game {
     this.cardsPage.append(this.difficultWords);
     this.difficultCards.innerHTML = '';
     this.sortMode = false;
-    this.sortNum(6);
+    this.sortNum(columnPercent);
     this.difficultWordsArray = [];
     this.difficultMode = true;
-    for (let i = 0; i < 8; i += 1) {
-      if (this.allRow[i + 1].children[6].textContent === '0.00%') {
+    for (let i = 0; i < this.cardData.length; i += 1) {
+      if (this.allRow[i + 1].children[columnPercent].textContent === '0.00%') {
         if (i === 0) {
+          switcher.switcher.style.display = 'none';
           document.querySelector('.no-mistakes').style.display = 'block';
+          this.startGameButton.style.display = 'none';
         } else {
           document.querySelector('.no-mistakes').style.display = 'none';
         }
@@ -98,11 +104,11 @@ class Game {
   }
 
   startGame() {
-    document.querySelector('.start-game').style.display = 'none';
+    this.startGameButton.style.display = 'none';
     this.stars.style.visibility = 'visible';
     this.repeatButton.style.display = 'block';
     if (!this.difficultMode) {
-      const index = this.category.indexOf(this.currentPage);
+      const index = category.categoryImages.indexOf(this.currentPage);
       this.randomArray = this.cardData[index].sort(() => Math.random() - 0.5);
     }
     this.mistakes = 0;
@@ -113,20 +119,15 @@ class Game {
 
   playGame(event) {
     const useCard = event.target;
-    if (!this.gameMode) return;
-    if (!useCard.classList.contains('word-card') || useCard.classList.contains('correctly-word')) return;
     const newStar = document.createElement('div');
+    if (!this.gameMode || !useCard.classList.contains('word-card') || useCard.classList.contains('correctly-word')) return;
     if (useCard.querySelector('.word-control-front .card-title').textContent === this.currentWord) {
       newStar.classList.add('star-win');
       useCard.classList.add('correctly-word');
       this.nextElem += 1;
       this.statisticsWord[this.currentWord].correct += 1;
       this.audio.src = 'audio/correct.mp3';
-      if (!this.difficultMode && this.nextElem === 8) {
-        setTimeout(() => this.finishGame(), 600);
-        return;
-      }
-      if (this.difficultMode && this.nextElem === this.difficultWordsArray.length) {
+      if (this.nextElem === 8 || (this.difficultMode && this.nextElem === this.difficultWordsArray.length)) {
         setTimeout(() => this.finishGame(), 600);
         return;
       }
@@ -150,7 +151,6 @@ class Game {
   }
 
   finishGame() {
-    this.difficultMode = false;
     if (this.mistakes) {
       this.audio.src = 'audio/sad_finish.mp3';
       document.querySelector('.lose-game').style.display = 'block';
@@ -168,23 +168,19 @@ class Game {
   }
 
   stopGame() {
-    this.buttonBack.style.display = 'none';
-    this.difficultWords.querySelector('.repeat-difficult-text').style.display = 'none';
-    this.cardsPage.querySelector('.start-game').style.display = 'block';
+    this.startGameButton.style.display = 'block';
     this.cardsPage.querySelectorAll('.correctly-word').forEach((item) => item.classList.remove('correctly-word'));
     this.mistakes = 0;
     this.nextElem = 0;
     this.gameMode = false;
-    this.difficultMode = false;
     this.repeatButton.style.display = 'none';
     this.stars.innerHTML = '';
   }
 
   checkClickLink(event) {
     let clickLink = '';
-    if (event.target.classList.contains('active-link')) {
-      return;
-    } if (event.target.classList.contains('nav-link')) {
+    if (event.target.classList.contains('active-link')) return;
+    if (event.target.classList.contains('nav-link')) {
       clickLink = event.target;
     } else {
       clickLink = event.target.closest('.category-card');
@@ -197,6 +193,8 @@ class Game {
   }
 
   highlightingLink() {
+    this.difficultMode = false;
+    switcher.switcher.style.display = 'block';
     document.querySelectorAll('.nav-link').forEach((item) => {
       item.classList.remove('active-link');
       if (this.currentPage === item.getAttribute('href').slice(1)) {
@@ -204,7 +202,7 @@ class Game {
       }
     });
     if (this.currentPage === 'MainPage') {
-      this.nav.firstElementChild.classList.add('active-link');
+      menu.nav.firstElementChild.classList.add('active-link');
       this.container.append(this.mainPage);
       this.cardsPage.remove();
       this.statistics.remove();
@@ -226,29 +224,33 @@ class Game {
     this.difficultWords.remove();
     this.cardsPage.append(this.cardsWrapper);
     this.container.append(this.cardsPage);
-    const index = this.category.indexOf(this.currentPage);
+    const index = category.categoryImages.indexOf(this.currentPage);
     this.cardData[index].sort(() => Math.random() - 0.5);
     for (let k = 0; k < this.cardsWrapper.children.length; k += 1) {
       this.cardsWrapper.children[k].style.backgroundImage = `url('${this.cardData[index][k].image}')`;
       this.cardsWrapper.children[k].querySelector('.word-control-front .card-title').textContent = this.cardData[index][k].word;
       this.cardsWrapper.children[k].querySelector('.word-control-back .card-title').textContent = this.cardData[index][k].translation;
     }
+    if (switcher.switcherMode) {
+      this.startGameButton.style.display = 'block';
+      this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'none');
+    } else {
+      this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'block');
+    }
   }
 
   audioPlay(event) {
-    if (switcher.switcherMode) return;
-    if (event.target.classList.contains('rotate')) return;
     const pressCard = event.target.closest('.word-card');
-    if (pressCard === null) return;
+    if (switcher.switcherMode || event.target.classList.contains('rotate') || pressCard === null) return;
     const currentWord = pressCard.querySelector('.word-control-front .card-title').textContent;
     this.statisticsWord[currentWord].click += 1;
     this.audio.src = `audio/${currentWord}.mp3`;
   }
 
   rotateCard(event) {
-    if (event.target.classList.contains('rotate')) {
-      this.currentCard = event.target.closest('.word-card');
-      this.rotate = event.target;
+    this.rotate = event.target;
+    if (this.rotate.classList.contains('rotate')) {
+      this.currentCard = this.rotate.closest('.word-card');
       this.currentCard.querySelector('.word-control-back').style.transform = 'rotateY(360deg)';
       this.currentCard.querySelector('.word-control-front').style.transform = 'rotateY(180deg)';
       this.currentCard.style.transform = 'rotateY(180deg)';
@@ -277,6 +279,7 @@ class Game {
     if (event && event.target.closest('.back-statisctics')) {
       this.cardsPage.remove();
       document.body.append(this.statistics);
+      switcher.switcher.style.display = 'block';
     }
     const tableContainer = this.table.querySelector('tbody');
     tableContainer.innerHTML = '';
@@ -290,7 +293,7 @@ class Game {
         const rightAnswer = document.createElement('td');
         const mistakesInGame = document.createElement('td');
         const percentMistakes = document.createElement('td');
-        categoryWord.innerHTML = this.categoryImages[i];
+        categoryWord.innerHTML = category.categoryImages[i];
         word.innerHTML = this.cardData[i][z].word;
         translate.innerHTML = this.cardData[i][z].translation;
         clickTrain.innerHTML = this.statisticsWord[this.cardData[i][z].word].click;

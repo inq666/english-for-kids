@@ -14,11 +14,11 @@ class Switcher {
     const backgroundPlay = 'linear-gradient(rgb(255, 162, 162) 0%,rgb(250, 132, 250) 100%)';
     this.switcher.addEventListener('click', () => {
       if (!this.switcherMode) {
-        this.switcher.textContent = 'PLAY';
-        this.switcherMode = true;
         if (game.currentPage === 'Statistics') {
           game.difficultMode = true;
         }
+        this.switcherMode = true;
+        this.switcher.textContent = 'PLAY';
         this.switcher.style.background = backgroundTrain;
         this.nav.style.background = backgroundTrain;
         game.difficultWords.querySelector('.back-statisctics').style.background = backgroundTrain;
@@ -26,9 +26,9 @@ class Switcher {
         this.cardsPage.querySelectorAll('.bottom-panel').forEach((item) => item.style.display = 'none');
         this.startGame.style.display = 'block';
       } else {
-        this.switcher.textContent = 'TRAIN';
         this.switcherMode = false;
         game.difficultMode = false;
+        this.switcher.textContent = 'TRAIN';
         this.switcher.style.background = backgroundPlay;
         this.nav.style.background = backgroundPlay;
         game.difficultWords.querySelector('.back-statisctics').style.background = backgroundPlay;
