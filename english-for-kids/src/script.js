@@ -34,7 +34,7 @@ class Game {
 
     this.stars = document.querySelector('.stars');
     this.table = document.querySelector('table');
-    if (this.statisticsWord === null) {
+    if (!this.statisticsWord) {
       this.statisticsReset();
     }
     this.cardsPage.remove();
@@ -49,7 +49,7 @@ class Game {
     this.resetButton.addEventListener('click', () => this.statisticsReset());
     window.addEventListener('click', (event) => this.checkClickLink(event));
     this.container.addEventListener('click', (event) => this.rotateCard(event));
-    this.container.addEventListener('mousemove', (event) => this.reverseRotateCard(event));
+    window.addEventListener('mousemove', (event) => this.reverseRotateCard(event));
     this.cardsPage.addEventListener('click', (event) => this.audioPlay(event));
     this.startGameButton.addEventListener('click', () => this.startGame());
     this.cardsPage.addEventListener('click', (event) => this.playGame(event));
@@ -79,8 +79,8 @@ class Game {
     this.sortNum(columnPercent);
     this.difficultWordsArray = [];
     this.difficultMode = true;
-     for (let i = 0; i < this.cardData.length; i += 1) {
-      if (this.allRow[i + 1].children[columnPercent].textContent === '0.00%' || i >= this.cardData.length - 1) {
+    for (let i = 0; i < this.cardData.length; i += 1) {
+      if (this.allRow[i + 1].children[columnPercent].textContent === '0.00%' || i >= this.cardData.length) {
         document.querySelector('.no-mistakes').style.display = 'none';
         if (i === 0) {
           switcher.switcher.style.display = 'none';
@@ -118,6 +118,7 @@ class Game {
   }
 
   playGame(event) {
+    const MAXCARDS = 8;
     const useCard = event.target;
     const newStar = document.createElement('div');
     if (!this.gameMode || !useCard.classList.contains('word-card') || useCard.classList.contains('correctly-word')) return;
@@ -127,7 +128,7 @@ class Game {
       this.nextElem += 1;
       this.statisticsWord[this.currentWord].correct += 1;
       this.audio.src = 'audio/correct.mp3';
-      if (this.nextElem === 8 || (this.difficultMode && this.nextElem === this.difficultWordsArray.length)) {
+      if (this.nextElem === MAXCARDS || (this.difficultMode && this.nextElem === this.difficultWordsArray.length)) {
         setTimeout(() => this.finishGame(), 600);
         return;
       }
@@ -185,7 +186,7 @@ class Game {
     } else {
       clickLink = event.target.closest('.category-card');
     }
-    if (clickLink === null) return;
+    if (!clickLink) return;
     this.currentPage = clickLink.getAttribute('href').slice(1);
     this.highlightingLink();
     if (this.currentPage === 'MainPage' || this.currentPage === 'Statistics') return;
@@ -193,6 +194,7 @@ class Game {
   }
 
   highlightingLink() {
+    this.cardsPage.querySelector('.title-cards').textContent = '';
     this.difficultMode = false;
     switcher.switcher.style.display = 'block';
     document.querySelectorAll('.nav-link').forEach((item) => {
@@ -224,6 +226,7 @@ class Game {
     this.difficultWords.remove();
     this.cardsPage.append(this.cardsWrapper);
     this.container.append(this.cardsPage);
+    this.cardsPage.querySelector('.title-cards').textContent = this.currentPage;
     const index = category.categoryImages.indexOf(this.currentPage);
     this.cardData[index].sort(() => Math.random() - 0.5);
     for (let k = 0; k < this.cardsWrapper.children.length; k += 1) {
@@ -256,20 +259,16 @@ class Game {
       this.currentCard.style.transform = 'rotateY(180deg)';
       setTimeout(() => {
         this.rotateMode = true;
-      }, 600);
+      }, 300);
     }
   }
 
   reverseRotateCard(event) {
-    if (this.currentCard) {
-      if (this.rotateMode) {
-        if (event.toElement !== this.currentCard) {
-          this.currentCard.querySelector('.word-control-back').style.transform = 'rotateY(180deg)';
-          this.currentCard.querySelector('.word-control-front').style.transform = 'rotateY(0deg)';
-          this.currentCard.style.transform = 'rotateY(0deg)';
-          this.rotateMode = false;
-        }
-      }
+    if (event.toElement.closest('.word-card') !== this.currentCard && this.rotateMode && this.currentCard) {
+      this.currentCard.querySelector('.word-control-back').style.transform = 'rotateY(180deg)';
+      this.currentCard.querySelector('.word-control-front').style.transform = 'rotateY(0deg)';
+      this.currentCard.style.transform = 'rotateY(0deg)';
+      this.rotateMode = false;
     }
   }
 
@@ -291,15 +290,17 @@ class Game {
         const rightAnswer = document.createElement('td');
         const mistakesInGame = document.createElement('td');
         const percentMistakes = document.createElement('td');
+        const errorWord = this.statisticsWord[this.cardData[i][z].word].error;
+        const correctWord = this.statisticsWord[this.cardData[i][z].word].correct;
         categoryWord.innerHTML = category.categoryImages[i];
         word.innerHTML = this.cardData[i][z].word;
         translate.innerHTML = this.cardData[i][z].translation;
         clickTrain.innerHTML = this.statisticsWord[this.cardData[i][z].word].click;
-        rightAnswer.innerHTML = this.statisticsWord[this.cardData[i][z].word].correct;
-        mistakesInGame.innerHTML = this.statisticsWord[this.cardData[i][z].word].error;
-        percentMistakes.innerHTML = `${((this.statisticsWord[this.cardData[i][z].word].error
-          / (this.statisticsWord[this.cardData[i][z].word].error + this.statisticsWord[this.cardData[i][z].word].correct)) * 100).toFixed(2)}%`;
-        if (percentMistakes.textContent === 'NaN%') {
+        rightAnswer.innerHTML = correctWord;
+        mistakesInGame.innerHTML = errorWord;
+        if (errorWord) {
+          percentMistakes.innerHTML = `${((errorWord / (errorWord + correctWord)) * 100).toFixed(2)}%`;
+        } else {
           percentMistakes.textContent = '0.00%';
         }
         row.append(categoryWord);

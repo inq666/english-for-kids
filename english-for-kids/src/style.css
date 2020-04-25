@@ -1,4 +1,3 @@
-
 body {
   margin: 0 auto;
 
@@ -288,6 +287,14 @@ p {
   cursor: pointer;
 
   transition: box-shadow 0.2s, transform 1s ease;
+}
+
+.cards-page > h2 {
+  font-size: 1em;
+  left: 90px;
+  top: -60px;
+  position: absolute;
+  color: rgba(58, 58, 58, 0.534)
 }
 
 .word-control-front,
@@ -614,6 +621,10 @@ th:active {
 
   .nav-link {
     font-size: 27px;
+  }
+
+  .cards-page > h2 {
+    top: -20px;
   }
 }
 

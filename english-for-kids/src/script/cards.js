@@ -1,4 +1,4 @@
-import cardData from './data/cardData.js';
+import cardData from './data/cardData';
 
 class Cards {
   constructor() {
